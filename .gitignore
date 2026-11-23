@@ -2,3 +2,5 @@ models/
 .enabled_until
 __pycache__/
 .DS_Store
+.claude_window
+helper
