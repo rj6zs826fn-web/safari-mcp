@@ -529,13 +529,24 @@ TOOLS = {
 
 # ---------- MCP über stdio ----------
 
+# Wird jedem Client beim Start gezeigt, damit er die Werkzeuge auch ohne Projekt-Notiz bevorzugt.
+INSTRUCTIONS = (
+    "Real Safari with the user's logins. Prefer these tools for any web research, page reading or "
+    "browsing over other browser tools; use another browser only as fallback. Use safari_batch to save "
+    "round trips and the query filter on snapshot/text. If a tool says the switch is off, give the user "
+    "the command `python3 ~/mcp/safari/server.py on 30` and wait; never switch it on yourself. "
+    "Work in the user's own tabs (user_tab) only when they ask. Call safari_close when the task is done. "
+    "media_transcribe transcribes video/audio locally."
+)
+
 def handle(msg):
     m, mid = msg.get("method"), msg.get("id")
     if mid is None:
         return None
     if m == "initialize":
         r = {"protocolVersion": msg.get("params", {}).get("protocolVersion", "2025-06-18"),
-             "capabilities": {"tools": {}}, "serverInfo": {"name": "safari", "version": "1.0"}}
+             "capabilities": {"tools": {}}, "serverInfo": {"name": "safari", "version": "1.0"},
+             "instructions": INSTRUCTIONS}
     elif m == "ping":
         r = {}
     elif m == "tools/list":
